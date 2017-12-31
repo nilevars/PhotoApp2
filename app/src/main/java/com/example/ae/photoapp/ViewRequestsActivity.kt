@@ -38,6 +38,7 @@ class ViewRequestsActivity : AppCompatActivity() {
     internal var requestLatitudes = ArrayList<Double>()
     internal var requestLongitudes = ArrayList<Double>()
     internal var usernames = ArrayList<String>()
+    internal var requestIds = ArrayList<String>()
     lateinit var arrayAdapter : ArrayAdapter<String>
 
     private var locationManager : LocationManager? = null
@@ -75,6 +76,7 @@ class ViewRequestsActivity : AppCompatActivity() {
                 intent.putExtra("userLat", requestLatitudes[i])
                 intent.putExtra("userLng", requestLongitudes[i])
                 intent.putExtra("username", usernames[i])
+                intent.putExtra("requestId", requestIds[i])
                 startActivity(intent)
             }
 
@@ -183,6 +185,8 @@ class ViewRequestsActivity : AppCompatActivity() {
                             requestLatitudes.add(geoPoint.latitude)
                             requestLongitudes.add(geoPoint.longitude)
                             usernames.add(`object`.getString("username"))
+                            requestIds.add(`object`.objectId)
+                            Log.i("Info","Request id is : "+`object`.objectId)
                             Log.i("info", "Distance is " + requests)
                             arrayAdapter.notifyDataSetChanged()
                         }

@@ -12,23 +12,23 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import android.graphics.Bitmap
-import android.provider.MediaStore.Images.Media.getBitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.google.android.gms.maps.model.*
 import android.content.DialogInterface
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.location.*
 import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.text.Html
 import android.view.ContextThemeWrapper
-import android.view.View
 import com.parse.*
 import kotlinx.android.synthetic.main.activity_request.*
 import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 
@@ -247,7 +247,7 @@ class RequestActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (objects.size > 0) {
                     for (`object` in objects) {
                         val geoPoint = `object`.getParseGeoPoint("location")
-                        addMarker(geoPoint)
+                        addMarker(geoPoint,`object`.objectId)
 
                     }
                 }
@@ -255,17 +255,56 @@ class RequestActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     /**     Adding Marker to map at location clicked **/
-    fun addMarker(location: ParseGeoPoint)
+    fun addMarker(location: ParseGeoPoint , requestId : String)
     {
         count++
         val userRequest = LatLng(location.latitude, location.longitude)
         val bitmapdraw = resources.getDrawable(R.drawable.target) as BitmapDrawable
-        val b = bitmapdraw.bitmap
+       // val b = bitmapdraw.bitmap
+        val b= getMarkerIcon(requestId)
         val iconx = Bitmap.createScaledBitmap(b, 100, 100, false)
         val icon = BitmapDescriptorFactory.fromBitmap(iconx)
         var marker:Marker = mMap.addMarker(MarkerOptions().position(userRequest).title("Requested by You "+count).icon(icon).snippet("m"+count))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userRequest, 15f))
         mHashMap.put(marker, count)
+
+    }
+    fun getMarkerIcon (requestId: String) : Bitmap
+    {
+        val bitmapdraw = resources.getDrawable(R.drawable.target) as BitmapDrawable
+        var b = bitmapdraw.bitmap
+        val parseQuery = ParseQuery<ParseObject>("Document")
+        parseQuery.whereEqualTo("requestId", requestId)
+
+        parseQuery.findInBackground { objects, e ->
+            if (e == null) {
+                if (objects.size > 0) {
+                    for (`object` in objects) {
+                        var postImage = `object`.getParseFile("FileName")
+                         postImage.dataInBackground.onSuccess {
+                             Log.i("Info","Data is : ")
+                         }
+                        Log.i("Info","Data is : ")
+                      //  b = getBitmapFromURL(postImage.url)
+                    }
+                }
+            }
+        }
+        return b
+    }
+
+    fun getBitmapFromURL(src: String): Bitmap? {
+        try {
+            val url = URL(src)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.setDoInput(true)
+            connection.connect()
+            val input = connection.getInputStream()
+            return BitmapFactory.decodeStream(input)
+        } catch (e: IOException) {
+            // Log exception
+            return null
+        }
 
     }
     /**     Getting Address from location Coordinates **/

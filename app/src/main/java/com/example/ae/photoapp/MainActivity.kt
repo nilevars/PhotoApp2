@@ -13,13 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ParseAnalytics.trackAppOpenedInBackground(intent)
-        val gameScore = ParseObject("GameScore")
-        gameScore.put("score", 1337)
-        gameScore.put("playerName", "Sean Plott")
-        gameScore.put("cheatMode", false)
-        gameScore.saveInBackground {
-            Log.d("DEBUG", "Game Score saved, id: " + gameScore.objectId )
-        }
         val query = ParseQuery<ParseObject>("Request")
         query.findInBackground { objects, e ->
             if (e == null) {

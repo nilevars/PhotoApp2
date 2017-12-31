@@ -16,17 +16,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        if(ParseUser.getCurrentUser()!=null)
+        {
+            Log.i("info","User Found")
+            val intent= Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
         login.setOnClickListener{
             Log.i("info","Btn click")
             val username = findViewById<EditText>(R.id.username)
             val password = findViewById<EditText>(R.id.password)
 
-            if(ParseUser.getCurrentUser()!=null)
-            {
-                Log.i("info","User Found")
-                val intent= Intent(this,MainActivity::class.java)
-                startActivity(intent)
-            }
             ParseUser.logInInBackground(username.text.toString(),password.text.toString(),{user,e->
                 if(e==null)
                 {

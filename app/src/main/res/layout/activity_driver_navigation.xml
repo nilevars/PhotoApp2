@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/imgv_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="bottom|start"
         android:src="@drawable/ic_add_alert_black_24dp"
          />

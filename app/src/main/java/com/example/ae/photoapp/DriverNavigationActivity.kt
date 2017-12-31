@@ -38,6 +38,7 @@ import android.support.v7.app.AlertDialog
 import android.text.Html
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.request.ImageRequestBuilder
@@ -47,7 +48,11 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.parse.ParseException
+import com.parse.ParseFile
+import com.parse.ParseObject
 import kotlinx.android.synthetic.main.activity_request.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -59,6 +64,7 @@ class DriverNavigationActivity : AppCompatActivity(), OnMapReadyCallback {
     internal var userLat:Double = 0.0
     internal var userLng:Double = 0.0
     internal var username: String = ""
+    internal var requestId: String = ""
     val TAKE_PHOTO_REQUEST=10
     var mCurrentPhotoPath : String = ""
     val STORE_RESULT=20
@@ -76,6 +82,7 @@ class DriverNavigationActivity : AppCompatActivity(), OnMapReadyCallback {
         userLat = intent.getDoubleExtra("userLat", 0.0)
         userLng = intent.getDoubleExtra("userLng", 0.0)
         username = intent.getStringExtra("username")
+        requestId = intent.getStringExtra("requestId")
     }
 
     /**
@@ -215,6 +222,7 @@ class DriverNavigationActivity : AppCompatActivity(), OnMapReadyCallback {
         val user = LatLng(userLat, userLng)
         var marker2=mMap.addMarker(MarkerOptions().position(user).title("Request").snippet(getAddressFromLocation(user)).icon(icon))
         marker2.showInfoWindow()
+        saveImage(rotatedBitmap)
     }
     fun permCheck(){
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -245,5 +253,64 @@ class DriverNavigationActivity : AppCompatActivity(), OnMapReadyCallback {
         matrix.postRotate(angle)
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height,
                 matrix, true)
+    }
+    fun saveImage(photo: Bitmap)
+    {
+        val bitmap = getResizedBitmap(photo, 500)
+        var pObj = ParseObject ("Document");
+        pObj.put("username", username);
+        pObj.put("requestId", requestId);
+
+        if (bitmap == null ) {
+            Log.d ("Error" , "Problem with image")
+        }
+        else
+        {
+            var stream =  ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            var pFile = ParseFile("DocImage.jpg", stream.toByteArray());
+            try
+            {
+                pFile.save();
+                pObj.put("FileName", pFile);
+                pObj.saveInBackground{e->
+                    if(e==null)
+                    {
+                        Toast.makeText(applicationContext,"Image SuccessFully Uploaded",Toast.LENGTH_LONG).show()
+                    }
+                    else
+                    {
+                        Toast.makeText(applicationContext,"Image Not SuccessFully Uploaded",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+            catch (e : ParseException)
+            {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    /**
+     * reduces the size of the image
+     * @param image
+     * @param maxSize
+     * @return
+     */
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+        var width = image.width
+        var height = image.height
+
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 }
