@@ -30,5 +30,20 @@
         android:layout_height="wrap_content"
         android:text="Request3"
         android:id="@+id/requestBtn3"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Camera Button"
+        android:id="@+id/cam"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Picture Button"
+        android:id="@+id/pic"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Photos for request"
+        android:id="@+id/photoReq"/>
 
 </LinearLayout>

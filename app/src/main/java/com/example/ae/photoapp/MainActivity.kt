@@ -35,6 +35,19 @@ class MainActivity : AppCompatActivity() {
             val intent= Intent(applicationContext,ViewRequestsActivity::class.java)
             startActivity(intent)
         };
+        cam.setOnClickListener{
+            val intent= Intent(applicationContext,CameraActivity::class.java)
+            startActivity(intent)
+        };
+        pic.setOnClickListener{
+            val intent= Intent(applicationContext,PhotoViewActivity::class.java)
+            startActivity(intent)
+        };
+        photoReq.setOnClickListener{
+            val intent= Intent(applicationContext,RequestPhotoActivity::class.java)
+            startActivity(intent)
+        };
+
 
     }
 }

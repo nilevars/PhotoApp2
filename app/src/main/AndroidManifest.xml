@@ -9,6 +9,8 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".StarterApplication"
@@ -45,7 +47,14 @@
         <activity android:name=".ViewRequestsActivity" />
         <activity
             android:name=".DriverNavigationActivity"
-            android:label="@string/title_activity_driver_navigation"></activity>
+            android:label="@string/title_activity_driver_navigation" />
+        <activity
+            android:name=".CameraActivity"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".PhotoViewActivity"
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".RequestPhotoActivity"></activity>
     </application>
 
 </manifest>
