@@ -4,6 +4,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
@@ -16,14 +17,15 @@ import java.util.ArrayList
 class RequestPhotoActivity : AppCompatActivity() {
 
     internal var requestIds = ArrayList<String>()
-    var pictureDatas : List<PictureData>? = ArrayList<PictureData>()
+    private val pictureDatas = ArrayList<PictureData>()
     lateinit var pictureAdapter : PictureRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_request_photo)
         displayRequests()
+        pictureAdapter = PictureRecyclerAdapter(applicationContext, pictureDatas)
         recycler_view.adapter = pictureAdapter
-        recycler_view.layoutManager = LinearLayoutManager(applicationContext,LinearLayoutManager.VERTICAL,false)
+        recycler_view.layoutManager = GridLayoutManager(applicationContext,2)
 
     }
     fun displayRequests()
@@ -38,6 +40,9 @@ class RequestPhotoActivity : AppCompatActivity() {
                         var requestId=`object`.objectId
 
                         var loc : ParseGeoPoint = `object`.getParseGeoPoint("location")
+                        Log.i("info loc","Lat "+loc.latitude)
+                        Log.i("info loc","Lng "+loc.longitude)
+
                         var location = getAddressFromLocation(loc)
 
                         var parseFile : ParseFile = `object`.getParseFile("FileName")
@@ -45,13 +50,12 @@ class RequestPhotoActivity : AppCompatActivity() {
 
                         var data : PictureData = PictureData(requestId,url,location)
 
-
-                        Picasso.with(applicationContext)
-                                .load(url)
-                                .into(pic1);
                         Log.i("info Photo Req Act","Req Id ="+requestId)
                         requestIds.add(requestId)
+                        pictureDatas.add(data)
+
                     }
+                    pictureAdapter.notifyDataSetChanged()
                 }
             }
         }

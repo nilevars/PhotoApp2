@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:id="@+id/pic_layout"
-    >
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/target"
-        android:id="@+id/pic"/>
-    <TextView
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Location"
-        android:id="@+id/loc"/>
-
-</LinearLayout>
+        android:weightSum="3"
+        android:id="@+id/pic_layout"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/target"
+            android:id="@+id/pic"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            />
+            <TextView
+                android:id="@+id/loc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_margin="10dp"
+                android:textSize="10sp"
+                android:text="Location"
+                android:drawableStart="@drawable/ic_loc"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                tools:fontFamily="monospace"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

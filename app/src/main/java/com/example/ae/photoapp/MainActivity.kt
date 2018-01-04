@@ -13,16 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ParseAnalytics.trackAppOpenedInBackground(intent)
-        val query = ParseQuery<ParseObject>("Request")
-        query.findInBackground { objects, e ->
-            if (e == null) {
-                for (request in objects) {
-                    Log.d("DEBUG", request.getString("username"))
-                }
-            } else {
-                Log.d("Error", "Error: " + e!!.message)
-            }
-        }
         requestBtn.setOnClickListener{
             val intent= Intent(applicationContext,RequestActivity::class.java)
             startActivity(intent)
@@ -33,14 +23,6 @@ class MainActivity : AppCompatActivity() {
         };
         requestBtn3.setOnClickListener{
             val intent= Intent(applicationContext,ViewRequestsActivity::class.java)
-            startActivity(intent)
-        };
-        cam.setOnClickListener{
-            val intent= Intent(applicationContext,CameraActivity::class.java)
-            startActivity(intent)
-        };
-        pic.setOnClickListener{
-            val intent= Intent(applicationContext,PhotoViewActivity::class.java)
             startActivity(intent)
         };
         photoReq.setOnClickListener{

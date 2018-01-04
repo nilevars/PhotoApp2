@@ -1,6 +1,8 @@
 package com.example.ae.photoapp
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 /**
  * Created by A E on 03-Jan-18.
@@ -19,7 +22,7 @@ import com.squareup.picasso.Picasso
 class PictureRecyclerAdapter(internal var context: Context, internal var pictureDatas: List<PictureData>) : RecyclerView.Adapter<PictureRecyclerAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.name?.setText(pictureDatas[position].location)
-        Picasso.with(context).load(pictureDatas[position].images).resize(400, 400).centerCrop().into(holder?.img, object : Callback {
+        Picasso.with(context).load(pictureDatas[position].images).transform( CropCircleTransformation()).resize(400, 400).centerCrop().into(holder?.img, object : Callback {
             override fun onSuccess() {
                 println("loaded Image")
             }
@@ -28,6 +31,11 @@ class PictureRecyclerAdapter(internal var context: Context, internal var picture
                 println("Unable to load Image")
             }
         })
+        holder?.linearLayout!!.setOnClickListener {
+            val in1 = Intent(context,PhotoDisplayActivity::class.java)
+            in1.putExtra("url",pictureDatas[position].images)
+            context.startActivity(in1)
+        }
         setScaleAnimation(holder?.linearLayout)
     }
 
@@ -43,8 +51,8 @@ class PictureRecyclerAdapter(internal var context: Context, internal var picture
         internal var linearLayout: LinearLayout? = null
 
         init {
-            name = rowView.findViewById<View>(R.id.pic) as TextView
-            img = rowView.findViewById<View>(R.id.loc) as ImageView
+            name = rowView.findViewById<View>(R.id.loc) as TextView
+            img = rowView.findViewById<View>(R.id.pic) as ImageView
             linearLayout = rowView.findViewById(R.id.pic_layout) as LinearLayout
         }
     }

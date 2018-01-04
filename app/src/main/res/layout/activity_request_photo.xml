@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.ae.photoapp.RequestPhotoActivity"
     android:orientation="vertical">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/pic1"
-        android:src="@drawable/goal"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/pic2"
-        android:src="@drawable/target"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

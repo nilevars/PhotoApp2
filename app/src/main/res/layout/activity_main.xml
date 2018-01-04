@@ -6,44 +6,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.ae.photoapp.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Request"
-        android:id="@+id/requestBtn"/>
+        android:text="Request Photo for a Location"
+        android:id="@+id/requestBtn"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Request2"
+        android:text="World Map Api"
         android:id="@+id/requestBtn2"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Request3"
+        android:text="View nearby Requests"
         android:id="@+id/requestBtn3"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Camera Button"
-        android:id="@+id/cam"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Picture Button"
-        android:id="@+id/pic"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Photos for request"
+        android:text="View Photos for your Requests"
         android:id="@+id/photoReq"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/logout"/>
 
 </LinearLayout>

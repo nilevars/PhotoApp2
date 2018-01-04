@@ -103,7 +103,7 @@ class DriverNavigationActivity : AppCompatActivity(), OnMapReadyCallback {
             val intent = Intent(this@DriverNavigationActivity,CameraActivity::class.java)
             intent.putExtra("username",username)
             intent.putExtra("requestId",requestId)
-            intent.putExtra("userLat",userLng)
+            intent.putExtra("userLat",userLat)
             intent.putExtra("userLng",userLng)
 
             startActivity(intent)
