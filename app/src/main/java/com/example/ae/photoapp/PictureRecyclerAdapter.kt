@@ -22,7 +22,8 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 class PictureRecyclerAdapter(internal var context: Context, internal var pictureDatas: List<PictureData>) : RecyclerView.Adapter<PictureRecyclerAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.name?.setText(pictureDatas[position].location)
-        Picasso.with(context).load(pictureDatas[position].images).transform( CropCircleTransformation()).resize(400, 400).centerCrop().into(holder?.img, object : Callback {
+        holder?.count?.setText(pictureDatas[position].count.toString())
+        Picasso.with(context).load(pictureDatas[position].images!!.get(0)).transform( CropCircleTransformation()).resize(400, 400).centerCrop().into(holder?.img, object : Callback {
             override fun onSuccess() {
                 println("loaded Image")
             }
@@ -33,7 +34,8 @@ class PictureRecyclerAdapter(internal var context: Context, internal var picture
         })
         holder?.linearLayout!!.setOnClickListener {
             val in1 = Intent(context,PhotoDisplayActivity::class.java)
-            in1.putExtra("url",pictureDatas[position].images)
+           // in1.putExtra("url",pictureDatas[position].images!!.get(0))
+            in1.putExtra("picData",pictureDatas[position])
             context.startActivity(in1)
         }
         setScaleAnimation(holder?.linearLayout)
@@ -47,11 +49,13 @@ class PictureRecyclerAdapter(internal var context: Context, internal var picture
 
     inner class ViewHolder(rowView: View) : RecyclerView.ViewHolder(rowView) {
         internal var name: TextView
+        internal var count: TextView
         internal var img: ImageView
         internal var linearLayout: LinearLayout? = null
 
         init {
             name = rowView.findViewById<View>(R.id.loc) as TextView
+            count = rowView.findViewById<View>(R.id.count) as TextView
             img = rowView.findViewById<View>(R.id.pic) as ImageView
             linearLayout = rowView.findViewById(R.id.pic_layout) as LinearLayout
         }

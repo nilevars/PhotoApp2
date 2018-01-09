@@ -35,6 +35,7 @@ class PhotoViewActivity : AppCompatActivity() {
 
 
         photoView.setImageBitmap(bmp)
+        Log.i("Image Size",""+bmp.byteCount)
         closePic.setOnClickListener {
             onBackPressed()
         }
@@ -46,8 +47,9 @@ class PhotoViewActivity : AppCompatActivity() {
 
         }
     }
-    fun saveImage(photo: Bitmap) {
-            val bitmap = getResizedBitmap(photo, 500)
+    fun saveImage(bitmap: Bitmap) {
+
+            //val bitmap = getResizedBitmap(photo, 500)
             var pObj = ParseObject ("Document");
             val loc :ParseGeoPoint = ParseGeoPoint(userLat,userLng)
             pObj.put("username", username);
@@ -70,8 +72,6 @@ class PhotoViewActivity : AppCompatActivity() {
                     pObj.saveInBackground{e->
                         if(e==null)
                         {
-                            val intent= Intent(applicationContext,MainActivity::class.java)
-                            startActivity(intent)
                             Toast.makeText(applicationContext,"Image SuccessFully Uploaded", Toast.LENGTH_LONG).show()
                         }
                         else

@@ -22,4 +22,5 @@
         android:text="Login / SignUp"
         android:id="@+id/login"
         />
+
 </LinearLayout>

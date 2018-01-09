@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else
                 {
+                    signUp()
                     Log.i("info","No User Found"+e.message)
                 }
 
@@ -52,6 +53,8 @@ class LoginActivity : AppCompatActivity() {
             if(e==null)
             {
                 Log.i("info" , "SignUp Successfull")
+                val intent= Intent(this,MainActivity::class.java)
+                startActivity(intent)
             }
             else
             {

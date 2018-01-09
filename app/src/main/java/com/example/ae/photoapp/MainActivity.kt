@@ -13,6 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ParseAnalytics.trackAppOpenedInBackground(intent)
+        if(ParseUser.getCurrentUser()==null)
+        {
+            Log.i("info","No User Found")
+            val intent= Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
         requestBtn.setOnClickListener{
             val intent= Intent(applicationContext,RequestActivity::class.java)
             startActivity(intent)

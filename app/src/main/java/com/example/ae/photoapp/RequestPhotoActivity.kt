@@ -47,12 +47,25 @@ class RequestPhotoActivity : AppCompatActivity() {
 
                         var parseFile : ParseFile = `object`.getParseFile("FileName")
                         var url = parseFile.url
-
-                        var data : PictureData = PictureData(requestId,url,location)
-
+                        var found = false
+                        for(pictureData in pictureDatas)
+                        {
+                            if(pictureData.location.equals(location))
+                            {
+                                pictureData.addUrl(url)
+                                Log.i("info", "Found")
+                                found=true
+                                break
+                            }
+                        }
+                        if(!found)
+                        {
+                            var data : PictureData = PictureData(requestId,url,location)
+                            pictureDatas.add(data)
+                        }
                         Log.i("info Photo Req Act","Req Id ="+requestId)
                         requestIds.add(requestId)
-                        pictureDatas.add(data)
+
 
                     }
                     pictureAdapter.notifyDataSetChanged()

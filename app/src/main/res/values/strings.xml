@@ -3,4 +3,7 @@
     <string name="title_activity_request">Map</string>
     <string name="eegeo_api_key">dbceb86dd5dce7fadad462898ffa120f</string>
     <string name="title_activity_driver_navigation">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

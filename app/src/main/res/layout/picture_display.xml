@@ -36,5 +36,18 @@
                 android:drawableTint="@color/colorPrimary"
                 tools:fontFamily="monospace"
                 android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_margin="10dp"
+                android:textSize="10sp"
+                android:text="Count"
+                android:drawableStart="@drawable/ic_camera"
+                android:drawablePadding="10dp"
+                android:drawableTint="#D3D3D3"
+                tools:fontFamily="monospace"
+                android:layout_gravity="center"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
